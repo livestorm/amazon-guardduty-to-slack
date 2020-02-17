@@ -156,16 +156,16 @@
     "    const message = event;\n",
     "    const consoleUrl = `https://console.aws.amazon.com/guardduty`;\n",
     "    const finding = message.detail.type;\n",
-    "    const findingDescription = message.detail.description;\n",	
+    "    const findingDescription = message.detail.description;\n",
     "    const findingTime = message.detail.updatedAt;\n",
     "    const findingTimeEpoch = Math.floor(new Date(findingTime) / 1000);\n",
     "    const account =  message.detail.accountId;\n",
     "    const region =  message.region;\n",
     "    const messageId = message.detail.id;\n",
     "    const lastSeen = `<!date^${findingTimeEpoch}^{date} at {time} | ${findingTime}>`;\n",
-    "    var color = '#7CD197';\n",    
+    "    var color = '#7CD197';\n",
     "    var severity = '';\n",
-    "\n",    
+    "\n",
     "    if (message.detail.severity < 4.0) {\n",
     "        if (minSeverityLevel !== 'LOW') {\n",
     "            callback(null);\n",
@@ -188,14 +188,14 @@
     "              \"fallback\": finding + ` - ${consoleUrl}/home?region=` +\n",
     "        `${region}#/findings?search=id%3D${messageId}`,\n",
     "        \"pretext\": `*Finding in ${region} for Acct: ${account}*`,\n",
-    "        \"title\": `${finding}`,\n", 
+    "        \"title\": `${finding}`,\n",
     "        \"title_link\": `${consoleUrl}/home?region=${region}#/findings?search=id%3D${messageId}`,\n",
     "        \"text\": `${findingDescription}`,\n",
     "        \"fields\": [\n",
     "            {\"title\": \"Severity\",\"value\": `${severity}`, \"short\": true},\n",
     "            {\"title\": \"Region\",\"value\": `${region}`,\"short\": true},\n",
     "            {\"title\": \"Last Seen\",\"value\": `${lastSeen}`, \"short\": true}\n",
-    "        ],\n", 
+    "        ],\n",
     "        \"mrkdwn_in\": [\"pretext\"],\n",
     "        \"color\": color\n",
     "        }];\n",
@@ -233,7 +233,7 @@
 			"minSeverityLevel" : {"Ref" : "MinSeverityLevel"}
 		    }
 		},
-                "Runtime": "nodejs8.10",
+                "Runtime": "nodejs12.x",
 		"MemorySize" : "128",
                 "Timeout": "10",
 		"Description" : "Lambda to push GuardDuty findings to slack",
@@ -244,4 +244,3 @@
 	}
     }
 }
-
